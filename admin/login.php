@@ -44,11 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql = "SELECT * FROM usuarios WHERE email = '{$email}' AND estado = 'activo'";
         $result = $conn->query($sql);
         
-        if ($result->num_rows === 1) {
+        if ($result && $result->num_rows === 1) {
             $user = $result->fetch_assoc();
             
             // Verificar la contraseña
-            if (password_verify_secure($password, $user['password'])) {
+            if (password_verify($password, $user['password'])) {
                 // Iniciar sesión
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['nombre'] . ' ' . $user['apellido'];

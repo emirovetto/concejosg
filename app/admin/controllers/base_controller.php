@@ -2,7 +2,9 @@
 /**
  * Controlador base para el panel de administración
  */
+require_once '../app/config/config.php';
 require_once '../app/admin/config.php';
+require_once '../app/includes/functions.php';
 
 class BaseController {
     /**
@@ -23,23 +25,48 @@ class BaseController {
      * @param array $data Datos a pasar a la vista
      */
     protected function view($view, $data = []) {
+        // Verificar que el usuario tenga acceso de administrador
+        $this->require_admin();
+        
         // Obtener la sección actual
         $section = isset($_GET['section']) ? $_GET['section'] : 'dashboard';
         
         // Extraer los datos para que estén disponibles en la vista
         extract($data);
         
+        // Verificar que existan los archivos de la plantilla
+        $header_file = ADMIN_VIEWS_PATH . '/templates/header.php';
+        $sidebar_file = ADMIN_VIEWS_PATH . '/templates/sidebar.php';
+        $footer_file = ADMIN_VIEWS_PATH . '/templates/footer.php';
+        $view_file = ADMIN_VIEWS_PATH . '/' . $view . '.php';
+        
+        if (!file_exists($header_file)) {
+            die('El archivo de plantilla header.php no existe: ' . $header_file);
+        }
+        
+        if (!file_exists($sidebar_file)) {
+            die('El archivo de plantilla sidebar.php no existe: ' . $sidebar_file);
+        }
+        
+        if (!file_exists($view_file)) {
+            die('El archivo de vista ' . $view . '.php no existe: ' . $view_file);
+        }
+        
+        if (!file_exists($footer_file)) {
+            die('El archivo de plantilla footer.php no existe: ' . $footer_file);
+        }
+        
         // Incluir el header
-        require_once ADMIN_VIEWS_PATH . '/templates/header.php';
+        require_once $header_file;
         
         // Incluir el sidebar
-        require_once ADMIN_VIEWS_PATH . '/templates/sidebar.php';
+        require_once $sidebar_file;
         
         // Incluir la vista
-        require_once ADMIN_VIEWS_PATH . '/' . $view . '.php';
+        require_once $view_file;
         
         // Incluir el footer
-        require_once ADMIN_VIEWS_PATH . '/templates/footer.php';
+        require_once $footer_file;
     }
     
     /**

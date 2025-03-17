@@ -8,21 +8,21 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="<?php echo SITE_URL; ?>/app/public/img/banner1.jpg" class="d-block w-100" alt="Concejo Deliberante">
+                <img src="<?php echo SITE_URL; ?>/app/public/img/concejoportada.jpeg" class="d-block w-100" alt="Concejo Deliberante">
                 <div class="carousel-caption d-none d-md-block">
                     <h2>Concejo Deliberante de San Genaro</h2>
                     <p>Trabajando por el bienestar de nuestra comunidad</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="<?php echo SITE_URL; ?>/app/public/img/banner2.jpg" class="d-block w-100" alt="Sesiones">
+                <img src="<?php echo SITE_URL; ?>/app/public/img/concejoportada.jpeg" class="d-block w-100" alt="Sesiones">
                 <div class="carousel-caption d-none d-md-block">
                     <h2>Sesiones Transparentes</h2>
                     <p>Accede a todas nuestras sesiones en video</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="<?php echo SITE_URL; ?>/app/public/img/banner3.jpg" class="d-block w-100" alt="Ordenanzas">
+                <img src="<?php echo SITE_URL; ?>/app/public/img/concejoportada.jpeg" class="d-block w-100" alt="Ordenanzas">
                 <div class="carousel-caption d-none d-md-block">
                     <h2>Ordenanzas Municipales</h2>
                     <p>Consulta todas las ordenanzas vigentes</p>

@@ -14,8 +14,11 @@ class BaseModel {
     
     /**
      * Constructor
+     * 
+     * @param string $table Nombre de la tabla
      */
-    public function __construct() {
+    public function __construct($table) {
+        $this->table = $table;
         $this->db = db_connect();
     }
     

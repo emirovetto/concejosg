@@ -8,8 +8,8 @@ session_start();
 
 // Incluir archivos de configuración
 require_once '../app/config/config.php';
-require_once '../app/admin/config.php';
 require_once '../app/includes/functions.php';
+require_once '../app/admin/config.php';
 
 // Verificar si el usuario está autenticado
 if (!is_admin()) {
@@ -40,15 +40,18 @@ if (!in_array($action, $admin_actions[$section])) {
 $controller_file = $admin_sections[$section]['controller'];
 $controller_class = $admin_sections[$section]['class'];
 
+// Ruta completa del controlador
+$controller_path = '../app/admin/controllers/' . $controller_file;
+
 // Verificar que el archivo del controlador exista
-if (!file_exists(ADMIN_CONTROLLERS_PATH . '/' . $controller_file)) {
+if (!file_exists($controller_path)) {
     // Redirigir a la página de error 500
     header('Location: ' . ADMIN_URL . '/error/500.php');
     exit;
 }
 
 // Incluir el controlador
-require_once ADMIN_CONTROLLERS_PATH . '/' . $controller_file;
+require_once $controller_path;
 
 // Verificar que la clase del controlador exista
 if (!class_exists($controller_class)) {

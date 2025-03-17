@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Panel de Administración - Concejo Deliberante de San Genaro">
     <meta name="author" content="Concejo Deliberante de San Genaro">
-    <title><?= isset($title) ? $title : 'Panel de Administración - Concejo Deliberante de San Genaro' ?></title>
+    <title><?= isset($title) ? $title . ' - ' . SITE_NAME : 'Panel de Administración - ' . SITE_NAME ?></title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="<?= BASE_URL ?>/app/public/img/favicon.ico">
@@ -48,7 +48,7 @@
             position: fixed;
             top: 56px;
             left: 0;
-            z-index: 1038;
+            z-index: 1001;
         }
 
         .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
@@ -56,13 +56,38 @@
             top: 56px;
         }
 
-        .sb-topnav {
-            padding-left: 0;
-            height: 56px;
-            z-index: 1039;
-            position: fixed;
-            width: 100%;
-            top: 0;
+        @media (max-width: 991.98px) {
+            .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
+                padding-left: 0;
+            }
+            
+            .sb-nav-fixed #layoutSidenav #layoutSidenav_nav {
+                width: 0;
+            }
+            
+            .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
+                width: 225px !important;
+            }
+        }
+
+        #layoutSidenav {
+            display: flex;
+        }
+
+        #layoutSidenav #layoutSidenav_nav {
+            flex-basis: 225px;
+            flex-shrink: 0;
+            transition: transform .15s ease-in-out;
+            z-index: 1002;
+            background-color: #212529;
+        }
+
+        #layoutSidenav #layoutSidenav_content {
+            flex-grow: 1;
+            min-width: 0;
+            min-height: calc(100vh - 56px);
+            position: relative;
+            z-index: 1001;
         }
 
         .sb-sidenav {
@@ -70,11 +95,6 @@
             flex-direction: column;
             height: 100%;
             flex-wrap: nowrap;
-        }
-
-        .sb-sidenav .sb-sidenav-menu {
-            flex-grow: 1;
-            overflow-y: auto;
         }
 
         .sb-sidenav-dark {
@@ -99,11 +119,13 @@
             background-color: #343a40;
         }
 
-        .sb-sidenav-menu-heading {
-            padding: 1.75rem 1rem 0.75rem;
-            font-size: 0.75rem;
-            font-weight: bold;
-            text-transform: uppercase;
+        .sb-sidenav-menu {
+            flex-grow: 1;
+        }
+
+        .sb-sidenav-menu .nav {
+            flex-direction: column;
+            flex-wrap: nowrap;
         }
 
         .sb-sidenav-menu .nav-link {
@@ -113,198 +135,112 @@
             position: relative;
         }
 
-        .sb-nav-link-icon {
+        .sb-sidenav-menu .nav-link .sb-nav-link-icon {
+            font-size: 0.9rem;
             margin-right: 0.5rem;
         }
 
-        #layoutSidenav {
-            display: flex;
+        .sb-sidenav-footer {
+            padding: 0.75rem;
+            flex-shrink: 0;
         }
 
-        #layoutSidenav_nav {
-            flex: 0 0 225px;
-            width: 225px;
+        .sb-topnav {
+            padding-left: 0;
+            height: 56px;
+            z-index: 1002;
         }
 
-        #layoutSidenav_content {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-            flex-grow: 1;
-            min-height: calc(100vh - 56px);
+        .sb-topnav.navbar-dark #sidebarToggle {
+            color: rgba(255, 255, 255, 0.5);
         }
 
-        .sb-sidenav-toggled #layoutSidenav_nav {
-            transform: translateX(-225px);
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            color: #fff !important;
+            background: #0d6efd !important;
+            border-color: #0d6efd !important;
         }
 
-        .sb-sidenav-toggled #layoutSidenav_content {
-            margin-left: 0;
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
         }
 
-        @media (max-width: 991.98px) {
-            .sb-nav-fixed #layoutSidenav #layoutSidenav_nav {
-                transform: translateX(-225px);
-                width: 225px;
-            }
-            
-            .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
-                padding-left: 0;
-            }
-            
-            .sb-sidenav-toggled #layoutSidenav_nav {
-                transform: translateX(0);
-            }
-            
-            .sb-sidenav-toggled #layoutSidenav_content {
-                margin-left: 0;
-            }
+        .card-dashboard {
+            transition: transform 0.2s ease-in-out;
         }
 
-        @media (min-width: 992px) {
-            .sb-nav-fixed #layoutSidenav #layoutSidenav_nav {
-                transform: translateX(0);
-            }
-            
-            .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
-                padding-left: 225px;
-            }
-            
-            .sb-sidenav-toggled #layoutSidenav_nav {
-                transform: translateX(-225px);
-            }
-            
-            .sb-sidenav-toggled #layoutSidenav_content {
-                padding-left: 0;
-            }
+        .card-dashboard:hover {
+            transform: translateY(-5px);
         }
 
-        /* Estilos para las tarjetas del dashboard */
-        .card {
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(33, 40, 50, 0.15);
-            margin-bottom: 1rem;
+        .breadcrumb {
+            margin-bottom: 20px;
         }
 
-        .card-header {
-            padding: 0.75rem 1.25rem;
-            margin-bottom: 0;
-            background-color: rgba(0, 0, 0, 0.03);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+        .action-buttons .btn {
+            margin-right: 5px;
         }
 
-        /* Estilos para las tablas */
+        .action-buttons .btn:last-child {
+            margin-right: 0;
+        }
+
+        .sidebar-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 0.5rem 1rem;
+        }
+
         .table-responsive {
-            margin-bottom: 1rem;
+            overflow-x: auto;
         }
 
-        .datatable {
-            width: 100% !important;
+        .bg-custom-primary {
+            background-color: #1e3a8a;
         }
 
-        /* Estilos para los formularios */
-        .form-group {
-            margin-bottom: 1rem;
+        .note-editor .dropdown-toggle::after {
+            display: none;
         }
 
-        .required:after {
+        .note-toolbar {
+            background-color: #f8f9fa;
+        }
+
+        .custom-file-label::after {
+            content: "Buscar";
+        }
+
+        .img-preview {
+            max-width: 200px;
+            max-height: 200px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        .help-block {
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+
+        .required-field::after {
             content: " *";
             color: #dc3545;
         }
 
-        /* Estilos para los botones de acción en tablas */
-        .btn-action {
-            margin-right: 0.25rem;
-            margin-bottom: 0.25rem;
+        /* Estilos para el modal de confirmación */
+        .modal-confirm .modal-header {
+            border-bottom: none;
         }
 
-        .btn-group .btn {
-            margin-right: 2px;
+        .modal-confirm .modal-content {
+            border-radius: 0.5rem;
         }
 
-        /* Estilos para el editor Summernote */
-        .note-editor {
-            margin-bottom: 1rem;
-        }
-
-        /* Estilos para las alertas */
-        .alert {
-            margin-bottom: 1.5rem;
-        }
-
-        /* Estilos para el footer */
-        footer {
-            font-size: 0.875rem;
-            margin-top: auto;
-            padding: 1rem 0;
-        }
-
-        /* Estilos para contenedores */
-        .container-fluid {
-            padding: 1.5rem;
-        }
-
-        .page-header {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .page-title {
-            margin-bottom: 0;
-            font-size: 1.5rem;
-            font-weight: 500;
-        }
-
-        /* Estilos para dispositivos móviles */
-        @media (max-width: 767.98px) {
-            .container-fluid {
-                padding: 1rem;
-            }
-            
-            .card-body {
-                padding: 1rem;
-            }
-            
-            .table-responsive {
-                overflow-x: auto;
-            }
-            
-            .btn {
-                margin-bottom: 0.5rem;
-            }
-
-            .page-header .btn {
-                margin-top: 0.5rem;
-            }
-
-            .page-header .col-auto {
-                width: 100%;
-                text-align: left;
-                margin-top: 0.5rem;
-            }
-
-            .page-title {
-                font-size: 1.25rem;
-            }
-        }
-
-        /* Mejoras para dispositivos móviles */
-        @media (max-width: 575.98px) {
-            .btn-group {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .btn-group .btn {
-                margin-bottom: 0.25rem;
-                width: 100%;
-            }
-
-            .datatable th, .datatable td {
-                white-space: nowrap;
-            }
+        .modal-confirm .modal-footer {
+            border-top: none;
         }
     </style>
     
@@ -312,41 +248,34 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="sb-nav-fixed">
-    <!-- Top Navigation -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <!-- Navbar Brand -->
-        <a class="navbar-brand ps-3" href="<?= ADMIN_URL ?>">
-            <img src="<?= BASE_URL ?>/app/public/img/logo-small.png" alt="Logo" height="30" class="me-2">
-            Admin Concejo
-        </a>
-        
-        <!-- Sidebar Toggle -->
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="<?= ADMIN_URL ?>">Panel de Administración</a>
+        <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
             <i class="fas fa-bars"></i>
         </button>
-        
-        <!-- Navbar Search -->
-        <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <!-- Espacio para búsqueda si se necesita -->
-        </div>
-        
-        <!-- Navbar User Menu -->
+        <!-- Navbar Search-->
+        <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></div>
+        <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-user fa-fw"></i> <?= isset($_SESSION['user_name']) ? $_SESSION['user_name'] : 'Usuario' ?>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="<?= ADMIN_URL ?>/?section=usuarios&action=perfil">Mi Perfil</a></li>
-                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="<?= ADMIN_URL ?>?section=usuarios&action=perfil">Perfil</a></li>
+                    <li><hr class="dropdown-divider" /></li>
                     <li><a class="dropdown-item" href="<?= ADMIN_URL ?>/logout.php">Cerrar Sesión</a></li>
                 </ul>
             </li>
         </ul>
     </nav>
-    
     <div id="layoutSidenav">
-        <!-- Sidebar content will be included here -->
+        <div id="layoutSidenav_nav">
+            <!-- Sidebar -->
+            <!-- El contenido del sidebar se cargará desde sidebar.php -->
+        </div>
     </div>
 </body>
 </html> 

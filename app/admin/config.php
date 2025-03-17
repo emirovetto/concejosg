@@ -3,6 +3,11 @@
  * Configuración del panel de administración
  */
 
+// Verificar que ya se haya definido la constante BASE_URL
+if (!defined('BASE_URL')) {
+    die('El archivo de configuración principal no ha sido cargado.');
+}
+
 // Definir la URL base del panel de administración
 if (!defined('ADMIN_URL')) {
     define('ADMIN_URL', BASE_URL . '/admin');
@@ -10,12 +15,12 @@ if (!defined('ADMIN_URL')) {
 
 // Definir la ruta de las vistas del panel de administración
 if (!defined('ADMIN_VIEWS_PATH')) {
-    define('ADMIN_VIEWS_PATH', VIEWS_PATH . '/admin');
+    define('ADMIN_VIEWS_PATH', APP_PATH . '/views/admin');
 }
 
 // Definir la ruta de los controladores del panel de administración
 if (!defined('ADMIN_CONTROLLERS_PATH')) {
-    define('ADMIN_CONTROLLERS_PATH', '../app/admin/controllers');
+    define('ADMIN_CONTROLLERS_PATH', APP_PATH . '/admin/controllers');
 }
 
 // Definir las secciones disponibles en el panel de administración

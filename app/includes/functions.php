@@ -9,15 +9,19 @@
  * @return mysqli Conexión a la base de datos
  */
 function db_connect() {
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    global $db;
     
-    if ($conn->connect_error) {
-        die('Error de conexión a la base de datos: ' . $conn->connect_error);
+    if (!isset($db) || !$db instanceof mysqli) {
+        $db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        
+        if ($db->connect_error) {
+            die('Error de conexión a la base de datos: ' . $db->connect_error);
+        }
+        
+        $db->set_charset('utf8');
     }
     
-    $conn->set_charset('utf8');
-    
-    return $conn;
+    return $db;
 }
 
 /**

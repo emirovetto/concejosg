@@ -14,11 +14,11 @@
     
     <div class="row">
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card bg-primary text-white h-100">
+            <div class="card card-dashboard bg-primary text-white h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="mb-0"><?= isset($total_noticias) ? $total_noticias : 0 ?></h4>
+                            <h4 class="mb-0"><?= isset($noticias_count) ? $noticias_count : 0 ?></h4>
                             <div>Noticias</div>
                         </div>
                         <div>
@@ -27,17 +27,17 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="<?= ADMIN_URL ?>/?section=noticias">Ver Detalles</a>
+                    <a class="small text-white stretched-link" href="<?= ADMIN_URL ?>?section=noticias">Ver Detalles</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
         </div>
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card bg-success text-white h-100">
+            <div class="card card-dashboard bg-success text-white h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="mb-0"><?= isset($total_sesiones) ? $total_sesiones : 0 ?></h4>
+                            <h4 class="mb-0"><?= isset($sesiones_count) ? $sesiones_count : 0 ?></h4>
                             <div>Sesiones</div>
                         </div>
                         <div>
@@ -46,17 +46,17 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="<?= ADMIN_URL ?>/?section=sesiones">Ver Detalles</a>
+                    <a class="small text-white stretched-link" href="<?= ADMIN_URL ?>?section=sesiones">Ver Detalles</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
         </div>
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card bg-warning text-white h-100">
+            <div class="card card-dashboard bg-warning text-white h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="mb-0"><?= isset($total_ordenanzas) ? $total_ordenanzas : 0 ?></h4>
+                            <h4 class="mb-0"><?= isset($ordenanzas_count) ? $ordenanzas_count : 0 ?></h4>
                             <div>Ordenanzas</div>
                         </div>
                         <div>
@@ -65,17 +65,17 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="<?= ADMIN_URL ?>/?section=ordenanzas">Ver Detalles</a>
+                    <a class="small text-white stretched-link" href="<?= ADMIN_URL ?>?section=ordenanzas">Ver Detalles</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
         </div>
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card bg-danger text-white h-100">
+            <div class="card card-dashboard bg-danger text-white h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="mb-0"><?= isset($total_concejales) ? $total_concejales : 0 ?></h4>
+                            <h4 class="mb-0"><?= isset($concejales_count) ? $concejales_count : 0 ?></h4>
                             <div>Concejales</div>
                         </div>
                         <div>
@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="<?= ADMIN_URL ?>/?section=concejales">Ver Detalles</a>
+                    <a class="small text-white stretched-link" href="<?= ADMIN_URL ?>?section=concejales">Ver Detalles</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -92,99 +92,41 @@
     </div>
     
     <div class="row">
-        <div class="col-xl-6 mb-4">
+        <div class="col-xl-12 mb-4">
             <div class="card h-100">
                 <div class="card-header">
-                    <i class="fas fa-newspaper me-1"></i>
-                    Últimas Noticias
+                    <i class="fas fa-info-circle me-1"></i>
+                    Información del Sistema
                 </div>
                 <div class="card-body">
-                    <?php if (empty($ultimas_noticias)): ?>
-                        <p class="text-muted">No hay noticias registradas.</p>
-                    <?php else: ?>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Título</th>
-                                        <th>Fecha</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($ultimas_noticias as $noticia): ?>
-                                        <tr>
-                                            <td><?= htmlspecialchars($noticia['titulo']) ?></td>
-                                            <td><?= date('d/m/Y', strtotime($noticia['fecha_publicacion'])) ?></td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <a href="<?= ADMIN_URL ?>/?section=noticias&action=editar&id=<?= $noticia['id'] ?>" class="btn btn-primary btn-sm btn-action" title="Editar" data-bs-toggle="tooltip">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <a href="<?= BASE_URL ?>/noticias/<?= $noticia['slug'] ?>" class="btn btn-info btn-sm btn-action" title="Ver en sitio" target="_blank" data-bs-toggle="tooltip">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Bienvenido al Panel de Administración</h5>
+                            <p>Desde aquí podrá gestionar todo el contenido del sitio web del Concejo Deliberante de San Genaro.</p>
+                            <p>Utilice el menú lateral para navegar entre las diferentes secciones.</p>
                         </div>
-                        <div class="text-end mt-3">
-                            <a href="<?= ADMIN_URL ?>/?section=noticias" class="btn btn-primary">Ver Todas</a>
+                        <div class="col-md-6">
+                            <h5>Estadísticas</h5>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Noticias
+                                    <span class="badge bg-primary rounded-pill"><?= isset($noticias_count) ? $noticias_count : 0 ?></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Sesiones
+                                    <span class="badge bg-success rounded-pill"><?= isset($sesiones_count) ? $sesiones_count : 0 ?></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Ordenanzas
+                                    <span class="badge bg-warning rounded-pill"><?= isset($ordenanzas_count) ? $ordenanzas_count : 0 ?></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Concejales
+                                    <span class="badge bg-danger rounded-pill"><?= isset($concejales_count) ? $concejales_count : 0 ?></span>
+                                </li>
+                            </ul>
                         </div>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-6 mb-4">
-            <div class="card h-100">
-                <div class="card-header">
-                    <i class="fas fa-calendar-alt me-1"></i>
-                    Próximas Sesiones
-                </div>
-                <div class="card-body">
-                    <?php if (empty($proximas_sesiones)): ?>
-                        <p class="text-muted">No hay sesiones programadas próximamente.</p>
-                    <?php else: ?>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Título</th>
-                                        <th>Fecha</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($proximas_sesiones as $sesion): ?>
-                                        <tr>
-                                            <td><?= htmlspecialchars($sesion['titulo']) ?></td>
-                                            <td>
-                                                <?= date('d/m/Y', strtotime($sesion['fecha'])) ?>
-                                                <br>
-                                                <small><?= date('H:i', strtotime($sesion['hora'])) ?> hs</small>
-                                            </td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <a href="<?= ADMIN_URL ?>/?section=sesiones&action=editar&id=<?= $sesion['id'] ?>" class="btn btn-primary btn-sm btn-action" title="Editar" data-bs-toggle="tooltip">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <a href="<?= BASE_URL ?>/sesiones/<?= $sesion['id'] ?>" class="btn btn-info btn-sm btn-action" title="Ver en sitio" target="_blank" data-bs-toggle="tooltip">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="text-end mt-3">
-                            <a href="<?= ADMIN_URL ?>/?section=sesiones" class="btn btn-primary">Ver Todas</a>
-                        </div>
-                    <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>

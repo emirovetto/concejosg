@@ -1,61 +1,63 @@
-        </main>
-        <footer class="py-4 bg-light mt-auto">
-            <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Concejo Deliberante de San Genaro <?= date('Y') ?></div>
-                    <div>
-                        <a href="<?= BASE_URL ?>" target="_blank">Ir al sitio web</a>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Concejo Deliberante San Genaro <?= date('Y') ?></div>
+                        <div>
+                            <a href="<?= SITE_URL ?>" target="_blank">Visitar sitio web</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </footer>
+            </footer>
+        </div>
     </div>
-</div>
-
-<!-- Bootstrap 5 JS Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
-
-<!-- Summernote JS -->
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-
-<!-- Custom scripts -->
-<script>
-// Scripts para el panel de administración
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar DataTables
-    const dataTablesElements = document.querySelectorAll('.datatable');
-    if (dataTablesElements.length > 0) {
-        dataTablesElements.forEach(function(table) {
-            try {
-                new DataTable(table, {
-                    language: {
-                        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
-                    },
-                    responsive: true,
-                    autoWidth: false,
-                    columnDefs: [
-                        { responsivePriority: 1, targets: 0 },
-                        { responsivePriority: 2, targets: -1 }
-                    ]
-                });
-            } catch (e) {
-                console.error('Error al inicializar DataTable:', e);
-            }
-        });
-    }
     
-    // Inicializar Summernote
-    const summernoteElements = document.querySelectorAll('.summernote');
-    if (summernoteElements.length > 0 && typeof $.fn.summernote !== 'undefined') {
-        summernoteElements.forEach(function(editor) {
-            try {
-                $(editor).summernote({
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
+    
+    <!-- Summernote JS -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-es-ES.min.js"></script>
+    
+    <!-- Bootstrap Select -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+    
+    <!-- Custom scripts for admin panel -->
+    <script>
+        // Script para el menú lateral
+        window.addEventListener('DOMContentLoaded', event => {
+            // Alternar el menú lateral
+            const sidebarToggle = document.body.querySelector('#sidebarToggle');
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', event => {
+                    event.preventDefault();
+                    document.body.classList.toggle('sb-sidenav-toggled');
+                    localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+                });
+            }
+
+            // Inicializar DataTables en todas las tablas con la clase .datatable
+            if ($.fn.DataTable) {
+                $('.datatable').DataTable({
+                    responsive: true,
+                    language: {
+                        url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
+                    }
+                });
+            }
+
+            // Inicializar el editor Summernote en todos los campos con la clase .summernote
+            if ($.fn.summernote) {
+                $('.summernote').summernote({
                     lang: 'es-ES',
                     height: 300,
                     toolbar: [
@@ -66,97 +68,42 @@ document.addEventListener('DOMContentLoaded', function() {
                         ['table', ['table']],
                         ['insert', ['link', 'picture']],
                         ['view', ['fullscreen', 'codeview', 'help']]
-                    ],
-                    callbacks: {
-                        onImageUpload: function(files) {
-                            // Aquí se podría implementar la subida de imágenes
-                            alert('La subida de imágenes directamente no está implementada. Por favor, suba la imagen primero y luego inserte la URL.');
-                        }
-                    }
+                    ]
                 });
-            } catch (e) {
-                console.error('Error al inicializar Summernote:', e);
             }
-        });
-    }
-    
-    // Inicializar tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function(tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-    
-    // Confirmación para eliminar elementos
-    const deleteButtons = document.querySelectorAll('.btn-delete, .delete-btn');
-    if (deleteButtons.length > 0) {
-        deleteButtons.forEach(function(button) {
-            button.addEventListener('click', function(e) {
-                if (!confirm('¿Está seguro de que desea eliminar este elemento? Esta acción no se puede deshacer.')) {
-                    e.preventDefault();
-                }
+
+            // Inicializar tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+
+            // Mostrar nombre del archivo seleccionado en inputs de tipo file
+            $('.custom-file-input').on('change', function() {
+                let fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').addClass("selected").html(fileName);
             });
         });
-    }
-    
-    // Previsualización de imágenes
-    const imageInputs = document.querySelectorAll('.image-input');
-    if (imageInputs.length > 0) {
-        imageInputs.forEach(function(input) {
-            input.addEventListener('change', function() {
-                const preview = document.getElementById(this.dataset.preview);
-                if (preview && this.files && this.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        preview.src = e.target.result;
-                        preview.style.display = 'block';
-                    };
-                    reader.readAsDataURL(this.files[0]);
-                }
-            });
-        });
-    }
-    
-    // Inicializar el toggle del sidebar
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    if (sidebarToggle) {
-        // Recuperar el estado del sidebar del localStorage
-        if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-            document.body.classList.add('sb-sidenav-toggled');
+
+        // Función para confirmar eliminación
+        function confirmarEliminar(id, tipo) {
+            if (confirm('¿Está seguro de que desea eliminar este ' + tipo + '?')) {
+                document.getElementById('form-eliminar-' + id).submit();
+            }
         }
-        
-        sidebarToggle.addEventListener('click', function() {
-            document.body.classList.toggle('sb-sidenav-toggled');
-            localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
-        });
-    }
-    
-    // Auto-cerrar alertas después de 5 segundos
-    const alerts = document.querySelectorAll('.alert:not(.alert-permanent)');
-    if (alerts.length > 0) {
-        alerts.forEach(function(alert) {
-            setTimeout(function() {
-                try {
-                    const bsAlert = new bootstrap.Alert(alert);
-                    bsAlert.close();
-                } catch (e) {
-                    console.error('Error al cerrar alerta:', e);
-                    alert.style.display = 'none';
+
+        // Función para previsualizar imágenes
+        function previsualizarImagen(input, previewId) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    $('#' + previewId).attr('src', e.target.result).show();
                 }
-            }, 5000);
-        });
-    }
-    
-    // Ajustar layout en dispositivos móviles
-    function adjustLayout() {
-        if (window.innerWidth < 992) {
-            document.body.classList.remove('sb-sidenav-toggled');
+                
+                reader.readAsDataURL(input.files[0]);
+            }
         }
-    }
-    
-    // Ejecutar al cargar y al cambiar el tamaño de la ventana
-    adjustLayout();
-    window.addEventListener('resize', adjustLayout);
-});
-</script>
+    </script>
 </body>
 </html> 
