@@ -3,12 +3,30 @@
  * Punto de entrada principal para el sitio web del Concejo Deliberante de San Genaro
  */
 
+// Configuración de errores para desarrollo (quitar en producción)
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Iniciar sesión
 session_start();
 
 // Cargar configuración
 require_once 'app/config/config.php';
 require_once 'app/includes/functions.php';
+
+// Mostrar información de depuración (quitar en producción)
+if (isset($_GET['debug']) && $_GET['debug'] === '1') {
+    echo '<pre>';
+    echo 'SITE_URL: ' . SITE_URL . '<br>';
+    echo 'BASE_URL: ' . BASE_URL . '<br>';
+    echo 'ADMIN_URL: ' . ADMIN_URL . '<br>';
+    echo 'ROOT_PATH: ' . ROOT_PATH . '<br>';
+    echo 'APP_PATH: ' . APP_PATH . '<br>';
+    echo 'CONTROLLERS_PATH: ' . CONTROLLERS_PATH . '<br>';
+    echo 'VIEWS_PATH: ' . VIEWS_PATH . '<br>';
+    echo 'REQUEST_URI: ' . $_SERVER['REQUEST_URI'] . '<br>';
+    echo '</pre>';
+}
 
 // Enrutamiento básico
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
@@ -30,14 +48,23 @@ if (file_exists($controller_file)) {
     $controller_name = ucfirst($page) . 'Controller';
     
     if (class_exists($controller_name)) {
-        $controller = new $controller_name();
-        
-        // Verificar si se solicita una acción específica
-        if ($action === 'detalle' && $id !== null && method_exists($controller, 'detalle')) {
-            $controller->detalle($id);
-        } else {
-            // Acción por defecto
-            $controller->index();
+        try {
+            $controller = new $controller_name();
+            
+            // Verificar si se solicita una acción específica
+            if ($action === 'detalle' && $id !== null && method_exists($controller, 'detalle')) {
+                $controller->detalle($id);
+            } else {
+                // Acción por defecto
+                $controller->index();
+            }
+        } catch (Exception $e) {
+            // Registrar el error
+            error_log('Error en el controlador ' . $controller_name . ': ' . $e->getMessage());
+            
+            // Mostrar página de error 500
+            header("HTTP/1.0 500 Internal Server Error");
+            require_once 'app/views/error/500.php';
         }
     } else {
         // Error: controlador no encontrado

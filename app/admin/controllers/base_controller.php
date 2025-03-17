@@ -2,9 +2,29 @@
 /**
  * Controlador base para el panel de administración
  */
-require_once '../app/config/config.php';
-require_once '../app/admin/config.php';
-require_once '../app/includes/functions.php';
+
+// Verificar que los archivos de configuración estén disponibles
+$config_file = '../app/config/config.php';
+$admin_config_file = '../app/admin/config.php';
+$functions_file = '../app/includes/functions.php';
+
+// Verificar si existen los archivos requeridos
+if (!file_exists($config_file)) {
+    die('Error crítico: No se encuentra el archivo de configuración principal: ' . $config_file);
+}
+
+if (!file_exists($admin_config_file)) {
+    die('Error crítico: No se encuentra el archivo de configuración del admin: ' . $admin_config_file);
+}
+
+if (!file_exists($functions_file)) {
+    die('Error crítico: No se encuentra el archivo de funciones: ' . $functions_file);
+}
+
+// Cargar los archivos
+require_once $config_file;
+require_once $admin_config_file;
+require_once $functions_file;
 
 class BaseController {
     /**

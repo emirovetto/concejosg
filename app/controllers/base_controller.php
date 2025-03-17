@@ -17,14 +17,32 @@ class BaseController {
         // Obtener el nombre de la página actual desde la URL
         $page = isset($_GET['page']) ? $_GET['page'] : 'home';
         
+        // Rutas completas a los archivos para diagnóstico
+        $header_path = VIEWS_PATH . '/layouts/header.php';
+        $view_path = VIEWS_PATH . '/' . $view . '.php';
+        $footer_path = VIEWS_PATH . '/layouts/footer.php';
+        
+        // Verificar que los archivos existan
+        if (!file_exists($header_path)) {
+            die('Error: No se pudo encontrar el archivo de encabezado: ' . $header_path);
+        }
+        
+        if (!file_exists($view_path)) {
+            die('Error: No se pudo encontrar el archivo de vista: ' . $view_path);
+        }
+        
+        if (!file_exists($footer_path)) {
+            die('Error: No se pudo encontrar el archivo de pie de página: ' . $footer_path);
+        }
+        
         // Incluir el encabezado
-        require_once VIEWS_PATH . '/layouts/header.php';
+        require_once $header_path;
         
         // Incluir la vista
-        require_once VIEWS_PATH . '/' . $view . '.php';
+        require_once $view_path;
         
         // Incluir el pie de página
-        require_once VIEWS_PATH . '/layouts/footer.php';
+        require_once $footer_path;
     }
     
     /**

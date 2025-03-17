@@ -4,7 +4,7 @@
 RewriteEngine On
 
 # Establecer la base de reescritura
-RewriteBase /concejoSG/
+RewriteBase /concejosg/
 
 # No aplicar reglas a archivos o directorios existentes
 RewriteCond %{REQUEST_FILENAME} !-f

@@ -49,22 +49,22 @@
                             <a class="nav-link <?php echo $page == 'home' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo $page == 'sesiones' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>/?page=sesiones">Sesiones</a>
+                            <a class="nav-link <?php echo $page == 'sesiones' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>/sesiones">Sesiones</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo $page == 'ordenanzas' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>/?page=ordenanzas">Ordenanzas</a>
+                            <a class="nav-link <?php echo $page == 'ordenanzas' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>/ordenanzas">Ordenanzas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo $page == 'concejales' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>/?page=concejales">Concejales</a>
+                            <a class="nav-link <?php echo $page == 'concejales' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>/concejales">Concejales</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo $page == 'bloques' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>/?page=bloques">Bloques</a>
+                            <a class="nav-link <?php echo $page == 'bloques' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>/bloques">Bloques</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo $page == 'noticias' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>/?page=noticias">Noticias</a>
+                            <a class="nav-link <?php echo $page == 'noticias' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>/noticias">Noticias</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo $page == 'contacto' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>/?page=contacto">Contacto</a>
+                            <a class="nav-link <?php echo $page == 'contacto' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>/contacto">Contacto</a>
                         </li>
                     </ul>
                 </div>

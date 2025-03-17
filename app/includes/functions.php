@@ -12,13 +12,20 @@ function db_connect() {
     global $db;
     
     if (!isset($db) || !$db instanceof mysqli) {
-        $db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-        
-        if ($db->connect_error) {
-            die('Error de conexión a la base de datos: ' . $db->connect_error);
+        try {
+            $db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+            
+            if ($db->connect_error) {
+                error_log('Error de conexión a la base de datos: ' . $db->connect_error);
+                // En producción, solo mostrar un mensaje genérico al usuario
+                die('Error de conexión a la base de datos. Por favor, inténtelo de nuevo más tarde o contacte al administrador.');
+            }
+            
+            $db->set_charset('utf8');
+        } catch (Exception $e) {
+            error_log('Excepción en la conexión a la base de datos: ' . $e->getMessage());
+            die('Error de conexión a la base de datos. Por favor, inténtelo de nuevo más tarde o contacte al administrador.');
         }
-        
-        $db->set_charset('utf8');
     }
     
     return $db;

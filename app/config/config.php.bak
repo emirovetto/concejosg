@@ -4,14 +4,14 @@
  */
 
 // Configuración de la base de datos
-define('DB_HOST', '127.0.0.1');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'concejo_sg');
+define('DB_HOST', 'localhost');
+define('DB_USER', 'u102838416_concejo_sg');
+define('DB_PASS', 'Rovetto5!');
+define('DB_NAME', 'u102838416_concejo_sg');
 
 // Configuración del sitio
 define('SITE_NAME', 'Concejo Deliberante de San Genaro');
-define('SITE_URL', 'http://localhost/concejoSG'); // URL para desarrollo local
+define('SITE_URL', 'https://4kdigitalsg.com/concejosg'); // URL actualizada (sin barra al final)
 
 // Definir BASE_URL para uso en templates
 define('BASE_URL', SITE_URL);
