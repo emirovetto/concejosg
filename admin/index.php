@@ -3,10 +3,6 @@
  * Archivo principal del panel de administración
  */
 
-// Configuración de errores para desarrollo (quitar en producción)
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 // Iniciar sesión
 session_start();
 
@@ -18,8 +14,8 @@ require_once '../app/config/config.php';
 require_once '../app/includes/functions.php';
 require_once '../app/admin/config.php';
 
-// Mostrar información de depuración (quitar en producción)
-if (isset($_GET['debug']) && $_GET['debug'] === '1') {
+// Mostrar información de depuración solo cuando se solicite explícitamente
+if (isset($_GET['debug']) && $_GET['debug'] === '1' && isset($_GET['admin_debug']) && $_GET['admin_debug'] === 'rovetto5') {
     echo '<pre>';
     echo 'SITE_URL: ' . SITE_URL . '<br>';
     echo 'BASE_URL: ' . BASE_URL . '<br>';

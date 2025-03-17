@@ -36,41 +36,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($email) || empty($password)) {
         $error = 'Por favor, complete todos los campos.';
     } else {
-        // Conectar a la base de datos
-        $conn = db_connect();
-        
-        // Consultar el usuario
-        $email = $conn->real_escape_string($email);
-        $sql = "SELECT * FROM usuarios WHERE email = '{$email}' AND estado = 'activo'";
-        $result = $conn->query($sql);
-        
-        if ($result && $result->num_rows === 1) {
-            $user = $result->fetch_assoc();
+        try {
+            // Conectar a la base de datos
+            $conn = db_connect();
             
-            // Verificar la contraseña
-            if (password_verify($password, $user['password'])) {
-                // Iniciar sesión
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = $user['nombre'] . ' ' . $user['apellido'];
-                $_SESSION['user_email'] = $user['email'];
-                $_SESSION['user_role'] = $user['rol'];
+            // Consultar el usuario
+            $email = $conn->real_escape_string($email);
+            $sql = "SELECT * FROM usuarios WHERE email = '{$email}' AND estado = 'activo'";
+            $result = $conn->query($sql);
+            
+            if ($result && $result->num_rows === 1) {
+                $user = $result->fetch_assoc();
                 
-                // Actualizar el último acceso
-                $update_sql = "UPDATE usuarios SET ultimo_acceso = NOW() WHERE id = {$user['id']}";
-                $conn->query($update_sql);
-                
-                // Redirigir al panel de administración
-                header("Location: index.php");
-                exit;
+                // Verificar la contraseña
+                if (password_verify($password, $user['password'])) {
+                    // Iniciar sesión
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user_name'] = $user['nombre'] . ' ' . $user['apellido'];
+                    $_SESSION['user_email'] = $user['email'];
+                    $_SESSION['user_role'] = $user['rol'];
+                    
+                    // Actualizar el último acceso
+                    $update_sql = "UPDATE usuarios SET ultimo_acceso = NOW() WHERE id = {$user['id']}";
+                    $conn->query($update_sql);
+                    
+                    // Redirigir al panel de administración
+                    header("Location: index.php");
+                    exit;
+                } else {
+                    $error = 'Credenciales incorrectas. Por favor, inténtelo de nuevo.';
+                    error_log('Intento de inicio de sesión fallido. Email: ' . $email . ' - Contraseña incorrecta');
+                }
             } else {
                 $error = 'Credenciales incorrectas. Por favor, inténtelo de nuevo.';
+                error_log('Intento de inicio de sesión fallido. Email: ' . $email . ' - Usuario no encontrado o inactivo');
             }
-        } else {
-            $error = 'Credenciales incorrectas. Por favor, inténtelo de nuevo.';
+            
+            // Cerrar la conexión
+            $conn->close();
+        } catch (Exception $e) {
+            error_log('Error en el inicio de sesión: ' . $e->getMessage());
+            $error = 'Ha ocurrido un error al intentar iniciar sesión. Por favor, inténtelo de nuevo más tarde.';
         }
-        
-        // Cerrar la conexión
-        $conn->close();
     }
 }
 ?>

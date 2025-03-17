@@ -14,25 +14,40 @@ class HomeController extends BaseController {
      * Constructor
      */
     public function __construct() {
-        $this->noticia_model = new NoticiaModel();
-        $this->sesion_model = new SesionModel();
+        try {
+            $this->noticia_model = new NoticiaModel();
+            $this->sesion_model = new SesionModel();
+        } catch (Exception $e) {
+            error_log('Error inicializando HomeController: ' . $e->getMessage());
+        }
     }
     
     /**
      * Método principal
      */
     public function index() {
-        // Obtener las últimas noticias
-        $noticias = $this->noticia_model->get_latest(3);
-        
-        // Obtener las próximas sesiones
-        $sesiones = $this->sesion_model->get_upcoming(2);
-        
-        // Cargar la vista
-        $this->view('home/index', [
-            'title' => 'Inicio - ' . SITE_NAME,
-            'noticias' => $noticias,
-            'sesiones' => $sesiones
-        ]);
+        try {
+            // Obtener las últimas noticias
+            $noticias = $this->noticia_model->get_latest(3);
+            
+            // Obtener las próximas sesiones
+            $sesiones = $this->sesion_model->get_upcoming(2);
+            
+            // Cargar la vista
+            $this->view('home/index', [
+                'title' => 'Inicio - ' . SITE_NAME,
+                'noticias' => $noticias,
+                'sesiones' => $sesiones
+            ]);
+        } catch (Exception $e) {
+            error_log('Error en HomeController::index: ' . $e->getMessage());
+            
+            // En caso de error, mostrar la página de inicio sin datos dinámicos
+            $this->view('home/index', [
+                'title' => 'Inicio - ' . SITE_NAME,
+                'noticias' => [],
+                'sesiones' => []
+            ]);
+        }
     }
 } 

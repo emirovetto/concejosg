@@ -2,7 +2,7 @@
 RewriteEngine On
 
 # Establecer la base de reescritura
-RewriteBase /concejoSG/admin/
+RewriteBase /concejosg/admin/
 
 # No aplicar reglas a archivos o directorios existentes
 RewriteCond %{REQUEST_FILENAME} !-f

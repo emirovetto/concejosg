@@ -440,3 +440,13 @@ function get_all_categorias() {
     
     return $categorias;
 }
+
+/**
+ * Determina si el entorno actual es de producción
+ * 
+ * @return bool True si es producción, false si es desarrollo
+ */
+function is_production() {
+    // Verificar si la URL contiene 4kdigitalsg.com
+    return strpos(SITE_URL, '4kdigitalsg.com') !== false;
+}

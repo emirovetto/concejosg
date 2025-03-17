@@ -4,21 +4,21 @@
  */
 
 // Verificar que los archivos de configuración estén disponibles
-$config_file = '../app/config/config.php';
-$admin_config_file = '../app/admin/config.php';
-$functions_file = '../app/includes/functions.php';
+$config_file = realpath('../app/config/config.php');
+$admin_config_file = realpath('../app/admin/config.php');
+$functions_file = realpath('../app/includes/functions.php');
 
 // Verificar si existen los archivos requeridos
-if (!file_exists($config_file)) {
-    die('Error crítico: No se encuentra el archivo de configuración principal: ' . $config_file);
+if (!$config_file || !file_exists($config_file)) {
+    die('Error crítico: No se encuentra el archivo de configuración principal. Ruta buscada: ' . realpath('../app/config/config.php'));
 }
 
-if (!file_exists($admin_config_file)) {
-    die('Error crítico: No se encuentra el archivo de configuración del admin: ' . $admin_config_file);
+if (!$admin_config_file || !file_exists($admin_config_file)) {
+    die('Error crítico: No se encuentra el archivo de configuración del admin. Ruta buscada: ' . realpath('../app/admin/config.php'));
 }
 
-if (!file_exists($functions_file)) {
-    die('Error crítico: No se encuentra el archivo de funciones: ' . $functions_file);
+if (!$functions_file || !file_exists($functions_file)) {
+    die('Error crítico: No se encuentra el archivo de funciones. Ruta buscada: ' . realpath('../app/includes/functions.php'));
 }
 
 // Cargar los archivos

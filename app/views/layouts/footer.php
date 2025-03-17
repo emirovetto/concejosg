@@ -17,11 +17,11 @@
                 <div class="col-md-4 mb-4 mb-md-0">
                     <h5 class="mb-4">Enlaces rápidos</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/?page=sesiones" class="text-white text-decoration-none">Sesiones</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/?page=ordenanzas" class="text-white text-decoration-none">Ordenanzas</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/?page=concejales" class="text-white text-decoration-none">Concejales</a></li>
-                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/?page=noticias" class="text-white text-decoration-none">Noticias</a></li>
-                        <li><a href="<?php echo SITE_URL; ?>/?page=contacto" class="text-white text-decoration-none">Contacto</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/sesiones" class="text-white text-decoration-none">Sesiones</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/ordenanzas" class="text-white text-decoration-none">Ordenanzas</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/concejales" class="text-white text-decoration-none">Concejales</a></li>
+                        <li class="mb-2"><a href="<?php echo SITE_URL; ?>/noticias" class="text-white text-decoration-none">Noticias</a></li>
+                        <li><a href="<?php echo SITE_URL; ?>/contacto" class="text-white text-decoration-none">Contacto</a></li>
                     </ul>
                 </div>
                 
