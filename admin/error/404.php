@@ -16,17 +16,31 @@ require_once '../../app/config/config.php';
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        body {
+            background-color: #f8f9fa;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .error-container {
             text-align: center;
-            padding: 100px 0;
+            max-width: 500px;
+            padding: 2rem;
         }
         .error-code {
             font-size: 120px;
             font-weight: bold;
-            color: #ffc107;
+            color: #dc3545;
+            margin-bottom: 1rem;
         }
-        body {
-            background-color: #f8f9fa;
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
         }
     </style>
 </head>

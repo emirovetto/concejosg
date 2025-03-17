@@ -19,7 +19,7 @@ class BaseController {
     }
     
     /**
-     * Carga una vista
+     * Carga una vista dentro de la plantilla maestra
      * 
      * @param string $view Nombre de la vista a cargar
      * @param array $data Datos a pasar a la vista
@@ -34,39 +34,30 @@ class BaseController {
         // Extraer los datos para que estén disponibles en la vista
         extract($data);
         
-        // Verificar que existan los archivos de la plantilla
-        $header_file = ADMIN_VIEWS_PATH . '/templates/header.php';
-        $sidebar_file = ADMIN_VIEWS_PATH . '/templates/sidebar.php';
-        $footer_file = ADMIN_VIEWS_PATH . '/templates/footer.php';
+        // Verificar que exista el archivo de la vista
         $view_file = ADMIN_VIEWS_PATH . '/' . $view . '.php';
-        
-        if (!file_exists($header_file)) {
-            die('El archivo de plantilla header.php no existe: ' . $header_file);
-        }
-        
-        if (!file_exists($sidebar_file)) {
-            die('El archivo de plantilla sidebar.php no existe: ' . $sidebar_file);
-        }
+        $master_template = ROOT_PATH . '/admin/master-template.php';
         
         if (!file_exists($view_file)) {
-            die('El archivo de vista ' . $view . '.php no existe: ' . $view_file);
+            error_log('El archivo de vista ' . $view . '.php no existe: ' . $view_file);
+            die('Error crítico: No se encuentra el archivo de vista solicitado.');
         }
         
-        if (!file_exists($footer_file)) {
-            die('El archivo de plantilla footer.php no existe: ' . $footer_file);
+        if (!file_exists($master_template)) {
+            error_log('El archivo de plantilla maestra no existe: ' . $master_template);
+            die('Error crítico: No se encuentra el archivo de plantilla maestra.');
         }
         
-        // Incluir el header
-        require_once $header_file;
+        // Capturar la salida de la vista
+        ob_start();
+        include $view_file;
+        $content = ob_get_clean();
         
-        // Incluir el sidebar
-        require_once $sidebar_file;
+        // Indicar que este acceso es válido para la plantilla maestra
+        define('ADMIN_ACCESS', true);
         
-        // Incluir la vista
-        require_once $view_file;
-        
-        // Incluir el footer
-        require_once $footer_file;
+        // Incluir la plantilla maestra con el contenido de la vista
+        include $master_template;
     }
     
     /**

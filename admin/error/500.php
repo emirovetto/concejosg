@@ -10,23 +10,37 @@ require_once '../../app/config/config.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error 500 - Error Interno del Servidor</title>
+    <title>Error 500 - Error del Servidor</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        body {
+            background-color: #f8f9fa;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .error-container {
             text-align: center;
-            padding: 100px 0;
+            max-width: 500px;
+            padding: 2rem;
         }
         .error-code {
             font-size: 120px;
             font-weight: bold;
             color: #dc3545;
+            margin-bottom: 1rem;
         }
-        body {
-            background-color: #f8f9fa;
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
         }
     </style>
 </head>
@@ -34,8 +48,8 @@ require_once '../../app/config/config.php';
     <div class="container">
         <div class="error-container">
             <div class="error-code">500</div>
-            <h1 class="mb-4">Error Interno del Servidor</h1>
-            <p class="lead mb-5">Lo sentimos, ha ocurrido un error inesperado en el servidor. Estamos trabajando para solucionarlo.</p>
+            <h1 class="mb-4">Error del Servidor</h1>
+            <p class="lead mb-5">Lo sentimos, ha ocurrido un error interno en el servidor. Por favor, inténtelo de nuevo más tarde.</p>
             <a href="<?= ADMIN_URL ?>" class="btn btn-primary btn-lg">
                 <i class="fas fa-home me-2"></i> Volver al Dashboard
             </a>

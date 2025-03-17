@@ -60,15 +60,24 @@ if (!class_exists($controller_class)) {
     exit;
 }
 
-// Crear una instancia del controlador
-$controller = new $controller_class();
-
-// Verificar que el método de la acción exista
-if (!method_exists($controller, $action)) {
-    // Redirigir a la página de error 404
-    header('Location: ' . ADMIN_URL . '/error/404.php');
+try {
+    // Crear una instancia del controlador
+    $controller = new $controller_class();
+    
+    // Verificar que el método de la acción exista
+    if (!method_exists($controller, $action)) {
+        // Redirigir a la página de error 404
+        header('Location: ' . ADMIN_URL . '/error/404.php');
+        exit;
+    }
+    
+    // Ejecutar la acción
+    $controller->$action();
+} catch (Exception $e) {
+    // Registrar el error
+    error_log('Error en el panel de administración: ' . $e->getMessage());
+    
+    // Mostrar página de error 500
+    header('Location: ' . ADMIN_URL . '/error/500.php');
     exit;
-}
-
-// Ejecutar la acción
-$controller->$action(); 
+} 
