@@ -1,0 +1,44 @@
+# Habilitar el motor de reescritura
+RewriteEngine On
+
+# Establecer la base de reescritura
+RewriteBase /concejosg/admin/
+
+# No aplicar reglas a archivos o directorios existentes
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Reglas específicas para login.php y logout.php
+RewriteRule ^login\.php$ login.php [L]
+RewriteRule ^logout\.php$ logout.php [L]
+
+# Reglas para las páginas de error
+RewriteRule ^error/([0-9]+)\.php$ error/$1.php [L]
+
+# Redirigir todas las demás solicitudes a index.php
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Configuración de PHP
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
+php_value max_execution_time 300
+php_value max_input_time 300
+
+# Configuración de seguridad
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# Denegar acceso a archivos sensibles
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Denegar acceso a archivos de configuración
+<FilesMatch "^(config\.php|\.htaccess)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch> 

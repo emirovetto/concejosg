@@ -1,0 +1,135 @@
+# Archivo .htaccess para el sitio del Concejo Deliberante de San Genaro
+
+# Habilitar el motor de reescritura
+RewriteEngine On
+
+# Establecer la base de reescritura
+RewriteBase /concejosg/
+
+# No aplicar reglas a archivos o directorios existentes
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirigir todas las solicitudes a index.php
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+# Proteger archivos y directorios sensibles
+<FilesMatch "^\.ht|^\.git|^\.env|database\.sql">
+    Order allow,deny
+    Deny from all
+    Satisfy All
+</FilesMatch>
+
+# Prevenir acceso a directorios sin un archivo index
+Options -Indexes
+
+# Prevenir acceso a archivos PHP en el directorio de uploads
+<FilesMatch "\.php$">
+    <If "%{REQUEST_URI} =~ m#^/app/public/uploads/#">
+        Order allow,deny
+        Deny from all
+        Satisfy All
+    </If>
+</FilesMatch>
+
+# Reglas de reescritura para URLs amigables
+# Página principal
+RewriteRule ^$ index.php [L]
+
+# Páginas principales
+RewriteRule ^(sesiones|ordenanzas|concejales|bloques|noticias|contacto)/?$ index.php?page=$1 [L,QSA]
+
+# Detalles de sesiones
+RewriteRule ^sesiones/([0-9]+)/?$ index.php?page=sesiones&id=$1 [L,QSA]
+
+# Detalles de ordenanzas
+RewriteRule ^ordenanzas/([0-9]+)/([0-9]+)/?$ index.php?page=ordenanzas&numero=$1&anio=$2 [L,QSA]
+RewriteRule ^ordenanzas/([0-9]+)/?$ index.php?page=ordenanzas&id=$1 [L,QSA]
+
+# Detalles de concejales
+RewriteRule ^concejales/([0-9]+)/?$ index.php?page=concejales&id=$1 [L,QSA]
+
+# Detalles de bloques
+RewriteRule ^bloques/([0-9]+)/?$ index.php?page=bloques&id=$1 [L,QSA]
+
+# Detalles de noticias
+RewriteRule ^noticias/([0-9]+)/?$ index.php?page=noticias&id=$1 [L,QSA]
+RewriteRule ^noticias/([a-zA-Z0-9-]+)/?$ index.php?page=noticias&slug=$1 [L,QSA]
+
+# Panel de administración - Excluir del procesamiento
+RewriteRule ^admin(/.*)?$ - [L]
+
+# Establecer el tipo MIME correcto para archivos JavaScript y CSS
+AddType application/javascript .js
+AddType text/css .css
+
+# Configuración de PHP
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
+php_value max_execution_time 300
+php_value max_input_time 300
+
+# Configuración de seguridad
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# Configuración de caché
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/x-javascript "access plus 1 month"
+    ExpiresByType application/x-shockwave-flash "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresDefault "access plus 2 days"
+</IfModule>
+
+# Comprimir archivos
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+</IfModule>
+
+# Establecer el charset por defecto
+AddDefaultCharset UTF-8
+
+# Prevenir ataques XSS
+<IfModule mod_headers.c>
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    # Descomentar en producción para habilitar HSTS
+    # Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+# Configuración de PHP (si se permite en .htaccess)
+<IfModule mod_php7.c>
+    php_flag display_errors Off
+    php_flag log_errors On
+    php_value error_log /path/to/error.log
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+    php_value memory_limit 128M
+    php_flag session.cookie_httponly On
+    php_flag session.use_only_cookies On
+    # Descomentar en producción para habilitar cookies seguras
+    # php_flag session.cookie_secure On
+</IfModule> 
